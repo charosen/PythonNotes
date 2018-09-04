@@ -45,7 +45,7 @@ Python中的一切数据都是对象。对象有3个特性：身份(Identity)、
     6. Built-in functions(内置函数)；
     7. Built-in methods(内置方法)；
     8. Classes(类)；
-    9. Class Instances(类实例)：当类定义了[__call__()][11]方法，则类实例为可调用类型；
+    9. Class Instances(类实例)：当类定义了[__ call __()][11]方法，则类实例为可调用类型；
 9. Modules(模块类型)：
     1. Custom classes(定制类)：由类定义创建的类，同时也是可调用类型；
     2. Class Instances(类实例)；
@@ -110,7 +110,7 @@ Python中的一切数据都是对象。对象有3个特性：身份(Identity)、
             + 定义为`False`的常量：`None`和`False`
             + 任意数字类型的0：`0`、`0.0`、`0j`、`Decimal(0)`、`Fraction(0, 1)`;
             + 空（长度为0）序列和空集合：`''`、`()`、`[]`、`{}`、`set()`、`range(0)`；
-            + 定义了以`False`为返回值的[__bool__()][]方法或者定义了以`0`为返回值的[__len__()][]方法的类的对象；
+            + 定义了以`False`为返回值的[__ bool __()][]方法或者定义了以`0`为返回值的[__ len __()][]方法的类的对象；
     
 1. 浮点型`float`表示带小数部分的数
     1. 小数：小数点表示；
@@ -141,8 +141,8 @@ PS: 下划线`_`可以在整型、浮点型、复数中使用，用于分组数�
 
 在交互解释器中，最后打印的表达式的结果赋值给变量`_`，该变量应被用户视作只读，不可为其显示赋值。
 
-[__bool__()]: https://docs.python.org/3.6/reference/datamodel.html#object.__bool__
-[__len__()]: https://docs.python.org/3.6/reference/datamodel.html#object.__len__
+[__ bool __()]: https://docs.python.org/3.6/reference/datamodel.html#object.__bool__
+[__ len __()]: https://docs.python.org/3.6/reference/datamodel.html#object.__len__
 
 <h2 id='4.'>4. 序列类型Sequences</h2>
 
@@ -273,7 +273,7 @@ PS: 下划线`_`可以在整型、浮点型、复数中使用，用于分组数�
     1. 队列是一种先入先出的数据结构；
     2. 在列表开头使用`insert()`或`pop()`效率不高（因为所有其他元素都要后（前）移一位）；
     3. 要实现队列，请使用[collections.deque][]，效率更高更快；
-4. 列表生成式：由括号括起来，包含一个表达式，后跟一个[for][]子句，然后跟0个或多个[for][]子句或[if][]子句；(外层[for][]/[if][]在前，内层[for][]/[if][]在后)；
+4. 列表生成式：由方括号括起来，包含一个表达式，后跟一个[for][]子句，然后跟0个或多个[for][]子句或[if][]子句；(外层[for][]/[if][]在前，内层[for][]/[if][]在后)；
 5. 列表生成式可以嵌套：列表生成式的表达式可以是另一个列表生成式；
 
 [collections.deque]: https://docs.python.org/3.6/library/collections.html#collections.deque
@@ -371,17 +371,139 @@ PS: 方法操作可以使用可迭代对象`iterable`为参数；运算符的操
 
 <h3 id='6.1.'>6.1. 字典Dictionaries</h3>
 
-字典方法[Mapping Types][]
+1. 字典方法[Mapping Types][]
+2. 字典生成式
 
 [Mapping Types]: https://docs.python.org/3.6/library/stdtypes.html#mapping-types-dict
 
 <h3 id='6.2.'>6.2. 字典视图对象Dictionary view objects</h3>
 
-方法[dict.keys()][]、[dict.values][]、[dict.items()][]返回的是视图对象(view object)。
+方法[dict.keys()][]、[dict.values()][]、[dict.items()][]返回的是视图对象(view object)。
 
 1. 字典视图对象是动态的，当字典变化时，它们也会随着变化。
 2. 字典视图对象支持的操作：
     1. 返回字典视图对象长度:`len(dictview)`；
     2. 可遍历/可迭代:`iter(dictview)`；
     3. 成员测试:`x in dictview`；
+
+
+[dict.keys()]: https://docs.python.org/3.6/library/stdtypes.html#dict.keys
+
+[dict.values()]: https://docs.python.org/3.6/library/stdtypes.html#dict.values
+
+[dict.items()]: https://docs.python.org/3.6/library/stdtypes.html#dict.items
+
+
+<h2 id='7.'>7. 迭代器Iterators(也是一种类型)</h2>
+
+<h3 id='7.1.'>7.1. 迭代器的定义</h3>
+迭代器类型必须满足迭代器协议，即必须定义[__ iter __()][]和[__ next __()][]两个方法：
+    
+1. `iterator`. [__ iter __()][]: 返回迭代器对象本身，此方法允许容器对象和迭代器能够在`for ... in ...`语句中使用；
+    
+2. `iterator`. [__ next __()][]: 返回容器对象/迭代器的下一个元素。当没有更多的元素时，抛出[StopIteration][]异常；
+
+
+<h3 id='7.2.'>7.2. 容器对象的可迭代性</h3>
+
+容器对象必须定义[__ iter __()][]方法才能支持迭代:
+  
+1. `container`. [__ iter __()][]: 返回迭代器对象；
+
+<h2 id='8.'>8. 生成器Generator(也是一种类型)</h2>
+
+生成器本质上也是一种迭代器，提供便捷生成迭代器的方法，自动生成[__ iter __()][]方法和[__ next __()][]方法；
+
+生成器方法[Generator-iterator methods][]：
+
+1. `generator.__next__()`: 执行生成器函数至下一个`yield`表达式/语句，并返回下一个`yield`表达式/语句的右侧表达式[expression_list][]；
+2. `generator.send(value)`: 将参数`value`赋值给`yield`表达式（作为`yield`表达式的值），并执行生成器函数至下一个`yield`表达式/语句，并返回下一个`yield`表达式/语句的右侧表达式；当使用`send()`来初始化生成器时，实参必须为`None`；
+3. `generator.throw(type[, value[, traceback]])`: 抛出`type`类型的异常，并执行生成器函数至下一个`yield`表达式/语句，并返回下一个`yield`表达式/语句的右侧表达式；
+4. `generator.close()`: 在上一次生成器函数暂停处抛出[GeneratorExit][]异常，如果生成器函数正常退出，则生成器函数已关闭；如果没有关闭，则抛出[GeneratorExit][]异常，传递给生成器函数调用者去关闭。。。
+5. 当没有更多的元素时，抛出[StopIteration][]异常；
+
+
+[__ iter __()]: https://docs.python.org/3.6/reference/datamodel.html#object.__iter__
+
+[__ next __()]: https://docs.python.org/3.6/reference/expressions.html#generator.__next__
+
+[StopIteration]: https://docs.python.org/3.6/library/exceptions.html#StopIteration
+
+[GeneratorExit]: https://docs.python.org/3.6/library/exceptions.html#GeneratorExit
+
+<h2 id='9.'>9. 函数</h2>
+
+<h3 id='9.1.'>9.1. 函数定义</h3>
+
+1. 函数被调用时，解释器会创建用于函数局部变量的局部名称空间；调用函数的实参被引入到被调函数的本地（局部）名称空间；所有在函数中赋值的变量都将值存储在函数的本地（局部）名称空间中；
+2. 函数局部变量引用顺序：本地名称空间 -> 外层函数的本地名称空间 -> 全局名称空间 -> 内置名称built-in空间；
+3. 可以在函数中引用全局变量的值，但不可以在函数中为全局变量赋值（除非使用`global`语句）；
+4. 函数定义在当前命名空间中引入函数名称，函数名称是一种用户自定义函数的类型（类型对象，Python中类型也是一种对象），函数名称可以赋值给其他变量；
+5. 函数参数：
+    + 形参(parameters, formal arguments):函数定义时的参数；
+        1. 位置或关键字形参(positional or keyword): 函数调用时，既可以传递位置实参，又可以传递关键字实参；
+            
+                def func(foo, bar=None): ...
+            
+        2. 位置形参(positional-only): 函数调用时，只能传递位置实参；Python未指定positional-only语法。但是，一些内嵌函数使用位置形参（例如，[abs()](https://docs.python.org/3.6/library/functions.html#abs)）；
+        3. 命名关键字形参(keyword-only): 函数调用时，只能传递关键字实参，位于可变位置形参或者`*`符号之后；
+
+                def func(arg, *, 
+kw_only1, kw_only2): ...
+        
+        4. 可变位置形参(var-positional): 函数调用时，传递任意数量的位置实参，除了那些位置形参(positional-only)已经指定的参数，形如`*args`；
+
+                def func(*args, **kwargs): ...
+        
+        5. 可变关键字形参(var-keyword): 函数调用时，传递任意数量的关键字实参，除了那些命名关键字形参(keyword-only)指定的参数，形如`**kw`。
+                
+    + 实参(arguments): 函数调用时的参数；
+        1. 关键字实参(keyword argument)：使用关键字传入或者`**`开头的字典传入的参数值；
+        2. 位置实参(positional argument): 使用位置传入或者`*`开头的可迭代对象传入的参数值；
+    
+    + 函数参数默认值是在函数定义处进行计算的，默认值仅计算一次，但是当默认值是可变对象（例如列表，字典或大多数类的实例）时，这会有所不同。
+
+6. lambda表达式：
+    用途：
+
+    1. 返回一个函数；
+    2. 传递一个小函数作为参数。
+
+7. 函数注释：
+
+    1. 参数注释：参数名称 + `:` + 类型；
+    2. 返回注释：参数列表 + `->` + 类型；
+    3. 函数注释以字典形式存储在函数`__annotations__`属性。
+
+8. 函数特殊属性：
+
+
+| 属性 | 含义 |  |
+| :-: | :-: | :-: |
+| __doc__ | 返回文档字符串文字，无则返回None；子类不继承； | 可写 |
+| __name__ | 返回函数名称 | 可写 |
+| __qualname__ | 返回函数[qualified name](https://docs.python.org/3.6/glossary.html#term-qualified-name) | 可写 |
+| __module__ | 返回函数模块名，无则返回None | 可写 |
+| __defaults__ | 返回函数参数默认值组成的元组，无则返回None | 可写 |
+| __code__ | 返回表示编译函数体的代码对象 | 可写 |
+| __globals__ | 返回函数定义处对应的全局命名空间，是一个字典 | 只读 |
+| __dict__ | 返回函数的局部命名空间，是一个字典 | 可写 |
+| __closure__ | None or a tuple of cells that contain bindings for the function’s free variables. | 只读 |
+| __annotations__ | 返回一个函数注释的字典 | 可写 |
+| __kwdefaults__ | 返回一个命名关键字形参的字典 | 可写 |
+
+
+
+<h3 id='9.2.'>9.2. 生成器函数Generator functions</h3>
+
+<h4 id='9.2.1.'>9.2.1. 生成器表达式</h4>
+
+一种简洁的生成器函数表示法；
+
+1. 生成器表达式语法：除了括号不同，语法与生成式（列表生成式、集合生成式、字典生成式）的语法相同；返回一个生成器对象；
+2. 当作为（函数、方法）调用的唯一实参时，生成器表达式可以省略括号；
+
+<h4 id='9.2.2.'>9.2.2. yield表达式/语句</h4>
+
+`yield`表达式可以返回值也可以赋值，而`yield`语句只能返回值；
 
