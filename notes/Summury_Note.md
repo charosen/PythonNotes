@@ -422,6 +422,9 @@ PS: 方法操作可以使用可迭代对象`iterable`为参数；运算符的操
 4. `generator.close()`: 在上一次生成器函数暂停处抛出[GeneratorExit][]异常，如果生成器函数正常退出，则生成器函数已关闭；如果没有关闭，则抛出[GeneratorExit][]异常，传递给生成器函数调用者去关闭。。。
 5. 当没有更多的元素时，抛出[StopIteration][]异常；
 
+[Generator-iterator methods]: https://docs.python.org/3.6/reference/expressions.html#generator-iterator-methods
+
+[expression_list]: https://docs.python.org/3.6/reference/expressions.html#grammar-token-expression_list
 
 [__ iter __()]: https://docs.python.org/3.6/reference/datamodel.html#object.__iter__
 
@@ -448,8 +451,7 @@ PS: 方法操作可以使用可迭代对象`iterable`为参数；运算符的操
         2. 位置形参(positional-only): 函数调用时，只能传递位置实参；Python未指定positional-only语法。但是，一些内嵌函数使用位置形参（例如，[abs()](https://docs.python.org/3.6/library/functions.html#abs)）；
         3. 命名关键字形参(keyword-only): 函数调用时，只能传递关键字实参，位于可变位置形参或者`*`符号之后；
 
-                def func(arg, *, 
-kw_only1, kw_only2): ...
+                def func(arg, *, kw_only1, kw_only2): ...
         
         4. 可变位置形参(var-positional): 函数调用时，传递任意数量的位置实参，除了那些位置形参(positional-only)已经指定的参数，形如`*args`；
 
@@ -507,3 +509,4 @@ kw_only1, kw_only2): ...
 
 `yield`表达式可以返回值也可以赋值，而`yield`语句只能返回值；
 
+生成器函数，在每次调用`next()`的时候执行，遇到`yield`语句返回，再次执行时从上次返回的`yield`语句处继续执行。
