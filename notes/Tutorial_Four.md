@@ -432,10 +432,11 @@ Python拥有许多复合数据类型，用于将其他值组合在一起。最�
         | 异 | Strings |
 
 
-3. Python中有3种字符串文字String literal:
+3. Python中有4种字符串文字String literal:
     + 普通字符串：单引号`'...'`或双引号`"..."`括起；
     + 原始字符串：以`r`开头的字符串，例如`r'...'`，不转义。 
     + 多行字符串：三个单引号或双引号括起来。换行符自动包含在字符串每行中，但可以通过在行尾加反斜线`\`来去除换行符；
+    + 格式化字符串([formatted string literals](https://docs.python.org/3.6/reference/lexical_analysis.html#f-strings))：以`f`开头的字符串；
     + 两个或多个相邻字符串文字会自动连接，过长的字符串文字可以如下跨行：
     
             ('...'
